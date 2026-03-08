@@ -1,0 +1,5 @@
+{
+  "guard_poll_interval": 5,
+  "guard_timeout": 60,
+  "tracker_script_path": ""
+}

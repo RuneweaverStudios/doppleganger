@@ -1,16 +1,21 @@
 {
   "schema": "openclaw.skill.v1",
   "name": "doppleganger",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "displayName": "Doppleganger",
-  "description": "Prevents duplicate subagent sessions running the same task. Saves tokens and reduces lag\u2014no more \"multiple Spidermen\" doing the same work.",
+  "description": "Prevents duplicate subagent sessions running the same task. One-shot check and continuous guard mode with configurable polling. Saves tokens and reduces lag.",
   "author": "RuneweaverStudios",
+  "main": "scripts/doppleganger.py",
   "tags": [
     "duplicate-detection",
     "subagent",
     "task-management",
-    "wrapper",
-    "cli"
+    "orchestration",
+    "guard",
+    "openclaw"
   ],
-  "platform": "openclaw"
+  "platform": "openclaw",
+  "dependencies": {
+    "required": ["subagent-tracker"]
+  }
 }
