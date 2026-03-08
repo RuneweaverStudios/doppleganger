@@ -5,6 +5,12 @@
   "displayName": "Doppleganger",
   "description": "Prevents duplicate subagent sessions running the same task. Saves tokens and reduces lag\u2014no more \"multiple Spidermen\" doing the same work.",
   "author": "RuneweaverStudios",
-  "tags": [],
+  "tags": [
+    "duplicate-detection",
+    "subagent",
+    "task-management",
+    "wrapper",
+    "cli"
+  ],
   "platform": "openclaw"
 }
