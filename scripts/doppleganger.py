@@ -32,11 +32,21 @@ def _find_tracker():
     return None
 
 
+def check_dependency() -> bool:
+    """Check if subagent-tracker skill is installed and accessible."""
+    return _find_tracker() is not None
+
+
 def check_duplicate(task: str, json_out: bool) -> dict:
     """Check if task is already running. Returns result dict."""
     tracker = _find_tracker()
     if not tracker:
-        return {"duplicate": False, "error": "subagent_tracker not found", "doppleganger_ok": False}
+        return {
+            "duplicate": False,
+            "error": "subagent-tracker skill not found. Install it with: clawhub install subagent-tracker",
+            "doppleganger_ok": False,
+            "dependency_missing": True,
+        }
     cmd = [sys.executable, tracker, "check-duplicate", "--task", task, "--json"]
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
@@ -73,10 +83,15 @@ def main():
         print(json.dumps(result))
         if result.get("duplicate"):
             sys.exit(2)
+        elif result.get("dependency_missing"):
+            sys.exit(3)
         elif result.get("error"):
             sys.exit(1)
         sys.exit(0)
     else:
+        if result.get("dependency_missing"):
+            print(f"Doppleganger: dependency missing — {result['error']}", file=sys.stderr)
+            sys.exit(3)
         if result.get("duplicate"):
             print(f"Doppleganger: duplicate detected (already running). sessionId={result.get('sessionId', '?')}")
             sys.exit(2)
