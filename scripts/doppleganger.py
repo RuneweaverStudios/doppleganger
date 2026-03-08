@@ -71,6 +71,11 @@ def main():
     result = check_duplicate(task, json_out)
     if json_out:
         print(json.dumps(result))
+        if result.get("duplicate"):
+            sys.exit(2)
+        elif result.get("error"):
+            sys.exit(1)
+        sys.exit(0)
     else:
         if result.get("duplicate"):
             print(f"Doppleganger: duplicate detected (already running). sessionId={result.get('sessionId', '?')}")
@@ -79,7 +84,7 @@ def main():
             print(f"Doppleganger: check failed — {result['error']}")
             sys.exit(1)
         print("Doppleganger: no duplicate; safe to spawn.")
-    sys.exit(0)
+        sys.exit(0)
 
 
 if __name__ == "__main__":
